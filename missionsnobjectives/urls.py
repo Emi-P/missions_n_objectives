@@ -4,7 +4,7 @@ from rest_framework import routers
 from missionsnobjectives import views
 
 router = routers.DefaultRouter()
-router.register(r"missionsnobjectives", views.ObjectiveView, "missionsnobjectives")
+router.register(r"objectives", views.ObjectiveView, "objectives")
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),

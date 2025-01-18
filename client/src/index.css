@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --black: #000000ff;
+    --dark-purple: #3d2645ff;
+    --byzantium: #832161ff;
+    --cerise: #da4167ff;
+    --ghost-white: #f0eff4ff;
+
+    background-color: var(--black);
+    color: var(--ghost-white);
+}
+
+.Navigation {
+    background-color: var(--dark-purple);
+}
+
+.TodaysObjectiveCard {
+    background-color: var(--cerise);
+}
