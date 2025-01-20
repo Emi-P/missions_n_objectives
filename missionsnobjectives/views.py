@@ -17,16 +17,31 @@ class ObjectiveView(
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def list_owned(self, request):
-
-        token = Token.objects.get(key=request.data['Authorization'])
-        print(token.user.password)
+        user, error_response = get_token_user(request)
+        if error_response:
+            return error_response
         
-
-        queryset = Objective.objects.all()
+        queryset = Objective.objects.filter(owner=user)
         serializer = ObjectiveSerializer(queryset, many=True)
+
         return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        user, error_response = get_token_user(request)
+        if error_response:
+            return error_response
+
+        request.data["owner"] = user.id
+        serializer = ObjectiveSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(["POST"])
@@ -45,7 +60,7 @@ def register(request):
         return Response(
             {
                 "token": token.key,
-                "user": serializer.data,
+                "user": serializer.data['username'],
             },
             status=status.HTTP_201_CREATED,
         )
@@ -65,7 +80,20 @@ def login(request):
 
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
-
     return Response(
-        {"token": token.key, "user": serializer.data}, status=status.HTTP_200_OK
+        {"token": token.key, "user": serializer.data['username']}, status=status.HTTP_200_OK
     )
+
+
+def get_token_user(request):
+    try:
+        token = Token.objects.get(key=request.data["Authorization"])
+        return token.user, None
+    except KeyError:
+        return None, Response(
+            {"error": "Token not provided"}, status=status.HTTP_401_UNAUTHORIZED
+        )
+    except Token.DoesNotExist:
+        return None, Response(
+            {"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST
+        )

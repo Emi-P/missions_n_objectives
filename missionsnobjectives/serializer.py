@@ -7,7 +7,7 @@ class ObjectiveSerializer(serializers.ModelSerializer):
         model = Objective
 
         # Which fields the API will include to CRUD
-        fields = '__all__'
+        fields = ['title','description','creation_date','deadline','completed','completion_date']
         # Read only data
         read_only_fields = []
 
