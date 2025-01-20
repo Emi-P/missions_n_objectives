@@ -17,8 +17,7 @@ class ObjectiveView(
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
 
-    @action(detail=False, methods=["get"])
-    def list_owned(self, request):
+    def list(self, request):
         user, error_response = get_token_user(request)
         if error_response:
             return error_response
@@ -34,6 +33,7 @@ class ObjectiveView(
             return error_response
 
         request.data["owner"] = user.id
+
         serializer = ObjectiveSerializer(data=request.data)
 
         if not serializer.is_valid():
