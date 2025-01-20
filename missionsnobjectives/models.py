@@ -7,6 +7,6 @@ class Objective(models.Model):
     deadline = models.DateField(auto_now=False)
     completed = models.BooleanField(default=False)
     completion_date = models.DurationField(null=True, blank=True)
-
+    
     def __str__(self):
         return self.title
