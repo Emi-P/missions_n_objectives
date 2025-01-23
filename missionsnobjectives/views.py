@@ -1,8 +1,15 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from rest_framework.decorators import api_view, action
+from rest_framework.decorators import (
+    api_view,
+    authentication_classes,
+    permission_classes,
+)
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 from django.shortcuts import get_object_or_404
 
 from .serializer import ObjectiveSerializer, UserSerializer
@@ -16,32 +23,46 @@ class ObjectiveView(
 ):  # Genera el crud a partir de solo esos dos atributos
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
 
     def list(self, request):
-        user, error_response = get_token_user(request)
-        if error_response:
-            return error_response
-        
-        queryset = Objective.objects.filter(owner=user)
+        queryset = Objective.objects.filter(owner=request.user)
         serializer = ObjectiveSerializer(queryset, many=True)
 
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        user, error_response = get_token_user(request)
-        if error_response:
-            return error_response
+        data = request.data
+        data["owner"] = request.user.id
 
-        request.data["owner"] = user.id
-
-        serializer = ObjectiveSerializer(data=request.data)
+        serializer = ObjectiveSerializer(data=data)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer.save()
-
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, pk=None):
+        if not pk.isdigit():
+            return Response(
+                {"error": "Invalid ID format"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        objective = get_object_or_404(Objective, id=pk, owner=request.user.id)
+
+        serializer = ObjectiveSerializer(instance=objective)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, pk=None, *args, **kwargs):
+        pass
+
+    def partial_update(self, request, *args, **kwargs):
+        pass
+
+    def destroy(self, request, *args, **kwargs):
+        pass
 
 
 @api_view(["POST"])
@@ -60,7 +81,7 @@ def register(request):
         return Response(
             {
                 "token": token.key,
-                "user": serializer.data['username'],
+                "user": serializer.data["username"],
             },
             status=status.HTTP_201_CREATED,
         )
@@ -81,11 +102,20 @@ def login(request):
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
     return Response(
-        {"token": token.key, "user": serializer.data['username']}, status=status.HTTP_200_OK
+        {"token": token.key, "user": serializer.data["username"]},
+        status=status.HTTP_200_OK,
     )
 
 
 def get_token_user(request):
+    """
+    In case token from the request can
+    be validated, returns (<User>,None) where
+    the user object is the one asociated to the token
+
+    In case token can't be validated,
+    returns an appropiate Response instance on each case.
+    """
     try:
         token = Token.objects.get(key=request.data["Authorization"])
         return token.user, None
