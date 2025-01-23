@@ -33,13 +33,12 @@ class ObjectiveView(
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        data = request.data
-        data["owner"] = request.user.id
-
-        serializer = ObjectiveSerializer(data=data)
+        serializer = ObjectiveSerializer(data=request.data)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer.save(owner=request.user)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -55,14 +54,14 @@ class ObjectiveView(
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, pk=None, *args, **kwargs):
-        pass
+    # def update(self, request, pk=None, *args, **kwargs):
+    #     pass
 
-    def partial_update(self, request, *args, **kwargs):
-        pass
+    # def partial_update(self, request, *args, **kwargs):
+    #     pass
 
-    def destroy(self, request, *args, **kwargs):
-        pass
+    # def destroy(self, request, *args, **kwargs):
+    #     pass
 
 
 @api_view(["POST"])
