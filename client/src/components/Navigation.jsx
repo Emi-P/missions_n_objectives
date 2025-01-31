@@ -1,7 +1,14 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navigation() {
+  const navigate = useNavigate();
+
+  function signOut() {
+    localStorage.removeItem('token')
+    navigate('/');
+  }
+
   return (
     <div className='Navigation p-4'>
       <Link to='/dashboard'>
@@ -19,6 +26,9 @@ export default function Navigation() {
             Create Mission
           </div>
         </Link>
+        <div onClick={signOut} className='bg-[var(--cerise)] rounded p-1 mt-1 hover:text-2xl transition-all ease-in-out'>
+            Sign out
+        </div>
       </div>
     </div>
   )
