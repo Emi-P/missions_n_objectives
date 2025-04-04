@@ -1,4 +1,4 @@
-#!/home/emiemiemi/docs/pjs/objectives_n_missions/venv/bin/python
+#!/home/emiemiemi/pjs/missions_n_objectives/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
