@@ -26,7 +26,7 @@ export default function Navigation() {
             Create Mission
           </div>
         </Link>
-        <div onClick={signOut} className='bg-[var(--cerise)] rounded p-1 mt-1 hover:text-2xl transition-all ease-in-out'>
+        <div onClick={signOut} className='bg-[var(--cerise)] rounded p-1 mt-1'>
             Sign out
         </div>
       </div>
