@@ -11,3 +11,11 @@ export const getAllObjectives = () => {
         }
     });
 }
+
+export const postObjective = (objective) => {
+    return taskApi.post('/', objective, {
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`
+        }
+    });
+}

@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard'
 import Register from './pages/Register'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import Login from './pages/Login'
-import CreateMission from './pages/CreateMission/CreateMission'
+import CreateObjective from "./pages/CreateObjective/CreateObjective";
 
 function App() {
   const userIsAuthenticated = localStorage.getItem('token') ? true : false
@@ -22,7 +22,13 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/create-mission" element={<CreateMission />}></Route>
+
+        <Route path="/todays-objective-create" element={
+          <ProtectedRoute>
+            <Navigation />
+            <CreateObjective />
+          </ProtectedRoute>
+        }></Route>
         {/* <Route path="/todays-objective-create" element={<TasksFormPage />}></Route> */}
       </Routes>
     </BrowserRouter>
