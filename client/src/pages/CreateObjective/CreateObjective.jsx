@@ -20,9 +20,6 @@ function CreateObjective() {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents the default form submission behavior
 
-        console.log('Objective Title:', objective.title);
-        console.log('Objective Description:', objective.description);
-
         const NewObjective = {
             title: objective.title,
             description: objective.description,
@@ -34,7 +31,6 @@ function CreateObjective() {
 
         await postObjective(NewObjective)
             .then((res) => {
-                console.log('Objective created successfully:', res.data);
                 setObjective({
                     title: '',
                     description: '',
