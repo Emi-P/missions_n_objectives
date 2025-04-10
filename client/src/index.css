@@ -9,20 +9,120 @@
     --cerise: #da4167ff;
     --ghost-white: #f0eff4ff;
 
-    background-color: var(--black);
+    /* CSS HEX */
+    --color5: #2C2C2C;
+    --base: #2C2C2C;
+
+    --color1: #522546;
+    --light1: #c8adc5225460ff;
+
+    --color2: #88304E;
+    --light2: #88304E;
+
+    --color3: #F7374F;
+    --blue1: #F7374F;
+
+    --color4: #c52a3c;
+    --blue1: #c52a3c;
+
+    --color5: #2C2C2C;
+    --blue2: #2C2C2C;
+
+    background-color: var(--base);
     color: var(--ghost-white);
 }
 
 .Navigation {
-    background-color: var(--dark-purple);
+    background-color: var(--color4);
 }
 
 .TodaysObjectiveCard {
-    background-color: var(--cerise);
+    background-color: var(--color3);
+    transition: 1s;
 }
 
-.FilterItem{
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    padding: 0rem 0.5rem 0rem 0.5rem;
+.hiddenAnimation {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s, transform 0.5s, max-height 0.5s;
+}
+
+.shownAnimation {
+    opacity: 1;
+    transform: translateY(0px);
+    max-height: 500px; /* ajustá este valor a un número que supere el alto máximo real del contenido */
+    transition: opacity 0.5s, transform 0.5s, max-height 0.5s;
+}
+
+.ObjectiveListContainer .ObjectiveCard {
+    background-color: var(--color3);
+    border-radius: 6px;
+    padding: 10px 10px 10px 10px;
+    transition: .4s;
+}
+
+.FilterItem {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding: 0rem 0.6rem 0rem 0.6rem;
+    background-color: var(--color3);
+    color: var(--ghost-white);
+}
+
+.FilterItem::placeholder {
+    color: var(--ghost-white);
+}
+
+.commonButton {
+    background-color: var(--color3);
+    border-radius: 6px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    transition: .4s;
+}
+
+.commonButton:hover {
+    background-color: var(--color5);
+    transition: .4s;
+}
+
+.CreateObjectiveForm {
+    background-color: var(--color4);
+    border-radius: 6px;
+    transition: .4s;
+}
+
+.FormField {
+    background-color: var(--color3);
+    border-radius: 6px;
+    padding: 10px 10px 10px 10px;
+    transition: .4s;
+}
+
+.FormField label {
+    font-size: 1.2rem;
+}
+
+
+.FormField input {
+    background-color: var(--color3);
+    border-radius: 6px;
+    padding: 10px 10px 10px 10px;
+    transition: .4s;
+}
+
+.FormField textarea {
+    background-color: var(--color3);
+    border-radius: 6px;
+    padding: 10px 10px 10px 10px;
+    transition: .4s;
+    height: fit-content;
+}
+
+.ObjectiveListContainer {
+    background-color: var(--color4);
+    border-radius: 6px;
+    padding: 10px 10px 10px 10px;
+    transition: .4s;
 }

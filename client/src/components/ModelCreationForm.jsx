@@ -6,9 +6,8 @@ function ModelCreationForm({ modelFields = [], setModel }) {
         e.preventDefault();
     }
     return (
-        <div className='text-amber-300'>
             <div className='flex flex-col items-center justify-center'>
-                <form className='flex flex-col grid-cols-2 space-y-4 text-orange-800' onSubmit={handleSubmit}>
+                <form className='flex flex-col grid-cols-2 space-y-4' onSubmit={handleSubmit}>
                     {modelFields.map((field, index) => {
                         return (
                             <div key={index} className='flex flex-col'>
@@ -24,11 +23,10 @@ function ModelCreationForm({ modelFields = [], setModel }) {
                         )
                     })}
                     <div className='flex flex-col'>
-                        <button type='submit' className='bg-orange-500 text-white p-2 rounded-md'>Create</button>
+                        <button type='submit' className=' p-2 rounded-md'>Create</button>
                     </div>
                 </form>
             </div>
-        </div>
     )
 }
 

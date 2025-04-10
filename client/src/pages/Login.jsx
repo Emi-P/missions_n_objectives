@@ -36,7 +36,7 @@ export default function Login() {
                         <input type='text' id='username' name='username' className='text-[black]' />
                         <label htmlFor='password'>Password</label>
                         <input type='password' id='password' name='password' className='text-[black]' />
-                        <button type='submit' className='bg-[var(--cerise)] text-white p-2 rounded'>Login</button>
+                        <button type='submit' className='bg-[var(--color3)] text-white p-2 rounded'>Login</button>
                     </div>
                 </form>
             </div>

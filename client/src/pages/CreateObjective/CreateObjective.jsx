@@ -2,8 +2,9 @@ import React from 'react'
 import { useState } from 'react';
 import { postObjective } from '../../api/objectives';
 // import ModelCreationForm from '../../components/ModelCreationForm';
-import Toaster ,{ toast } from 'react-hot-toast';
+import Toaster, { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/common/Button';
 
 function CreateObjective() {
     const navigate = useNavigate();
@@ -49,9 +50,7 @@ function CreateObjective() {
     };
 
     return (
-        <div className='items-center text-center justify-center flex flex-col'>
-            <h1 className='text-4xl p-4f center text-center'>Create Objective</h1>
-
+        <div className='text-center justify-center flex flex-col'>
             {/* <ModelCreationForm
                 modelFields={
                     [
@@ -66,36 +65,44 @@ function CreateObjective() {
                         Idea no usada 
                         */}
 
-            <div className='flex flex-col items-center justify-center'>
-                <form className='flex flex-col grid-cols-2 space-y-4 text-orange-800' onSubmit={handleSubmit}>
-                    <div className=''>
-                        <label htmlFor="Title" className=''>Title</label>
-                        <input type="text"
-                            className='w-full'
-                            placeholder='Objective Name'
-                            value={objective.title}
-                            onChange={(e) => setObjective({ ...objective, title: e.target.value })}
-                            required={true}
-                        />
+            <form className='flex flex-col self-center grid-cols-2 space-y-4 max-w-screen-sm CreateObjectiveForm p-4 mt-10' onSubmit={handleSubmit}>
+                <div className='FormField'>
+                    <div className='w-fit text-center flex flex-col'>
+                        <label htmlFor="">Title</label>
+                        <hr />
                     </div>
-                    <div className='flex flex-col'>
-                        <label htmlFor="Desc">Description</label>
-                        <textarea
-                            placeholder='Objective Description'
-                            value={objective.description}
-                            onChange={(e) => setObjective({ ...objective, description: e.target.value })}
-                            required={true}
-                            rows="5"
-                            className=''
-                        />
+                    <input type="text"
+                        className='w-full'
+                        placeholder='-->'
+                        value={objective.title}
+                        onChange={(e) => setObjective({ ...objective, title: e.target.value })}
+                        required={true}
+                    />
+                </div>
+                <div className='flex flex-col FormField'>
+                    <div className='w-fit text-center flex flex-col'>
+                        <label htmlFor="">Description</label>
+                        <hr />
                     </div>
-                    <div className=''>
+                    <textarea
+                        value={objective.description}
+                        cols={30}
+                        onChange={(e) => setObjective({ ...objective, description: e.target.value })}
+                        placeholder='-->'
+                        required={true}
+                        rows="5"
+                        className=''
+                    />
+                </div>
+                <div className='FormField'>
+                    <div className='w-fit text-center flex flex-col'>
                         <label htmlFor="">Deadline</label>
-                        <input type="date" className='w-full' name="" id="" />
+                        <hr />
                     </div>
-                    <button type='submit' className='bg-white'>Create</button>
-                </form>
-            </div>
+                    <input type="date" className='w-full' name="" id="" />
+                </div>
+                <Button>Create</Button>
+            </form>
         </div >
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import Button from './common/Button';
 
 export default function Navigation() {
   const navigate = useNavigate();
@@ -8,27 +9,29 @@ export default function Navigation() {
     localStorage.removeItem('token')
     navigate('/');
   }
-
+  function apa() {
+    alert('test');
+  }
   return (
-    <div className='Navigation p-4 lg:text-center flex flex-col items-center justify-center'>
+    <div className='Navigation p-4 lg:text-center flex flex-row justify-between items-center'>
       <Link to='/dashboard'>
-        <h1 className='text-4xl p-4 border-'>Missions n' Objectives</h1>
+        <h1 className='md:text-4xl lg:text-4xl p-4 text-2xl'>Missions n' Objectives</h1>
       </Link>
 
-      <div className='flex space-x-6 w-fit pb-5'>
+      <div className='flex gap-2 w-fit items-center'>
         <Link to='/todays-objective-create'>
-          <div className='bg-[var(--cerise)] rounded p-1 mt-1 transition-all ease-in-out'>
+          <Button>
             Create Objective for today
-          </div>
+          </Button>
         </Link>
         <Link to='/create-mission'>
-          <div className='bg-[var(--cerise)] rounded p-1 mt-1 transition-all ease-in-out'>
+          <Button>
             Create Mission
-          </div>
+          </Button>
         </Link>
-        <div onClick={signOut} className='bg-[var(--cerise)] rounded p-1 mt-1'>
-            Sign out
-        </div>
+        <Button onClick={signOut}>
+          Sign Out
+        </Button>
       </div>
     </div>
   )
