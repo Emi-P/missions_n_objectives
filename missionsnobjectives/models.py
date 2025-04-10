@@ -8,5 +8,7 @@ class Objective(models.Model):
     completed = models.BooleanField(default=False)
     completion_date = models.DurationField(null=True, blank=True)
 
+    owner = models.ForeignKey('auth.User', related_name='owner', on_delete=models.CASCADE, default=1)
+    
     def __str__(self):
         return self.title

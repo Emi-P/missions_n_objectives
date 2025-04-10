@@ -5,5 +5,17 @@ const taskApi = axios.create({
 })
 
 export const getAllObjectives = () => {
-    return taskApi.get('/');
+    return taskApi.get('/', {
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`
+        }
+    });
+}
+
+export const postObjective = (objective) => {
+    return taskApi.post('/', objective, {
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`
+        }
+    });
 }
