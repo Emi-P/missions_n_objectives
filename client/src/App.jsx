@@ -5,20 +5,22 @@ import Register from './pages/Register'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import Login from './pages/Login'
 import CreateObjective from "./pages/CreateObjective/CreateObjective";
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   const userIsAuthenticated = localStorage.getItem('token') ? true : false
 
   return (
-    <BrowserRouter>      
+    <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />}></Route>
         <Route path="/dashboard" element={
           <ProtectedRoute>
-            <Navigation /> 
+            <Navigation />
             <Dashboard />
           </ProtectedRoute>
-          }></Route>
+        }></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>

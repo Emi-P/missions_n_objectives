@@ -2,8 +2,12 @@ import React from 'react'
 import { useState } from 'react';
 import { postObjective } from '../../api/objectives';
 // import ModelCreationForm from '../../components/ModelCreationForm';
+import Toaster ,{ toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function CreateObjective() {
+    const navigate = useNavigate();
+
     const [objective, setObjective] = useState({
         title: '',
         description: '',
@@ -31,7 +35,6 @@ function CreateObjective() {
         await postObjective(NewObjective)
             .then((res) => {
                 console.log('Objective created successfully:', res.data);
-                // Optionally, you can reset the form or redirect the user
                 setObjective({
                     title: '',
                     description: '',
@@ -40,15 +43,19 @@ function CreateObjective() {
                     completed: false,
                     completion_date: null,
                 });
+                toast('Objective created successfully!');
+                navigate('/dashboard');
             })
             .catch((error) => {
                 console.error('Error creating objective:', error);
+                toast('Error creating objective');
             });
     };
 
     return (
         <div className='items-center text-center justify-center flex flex-col'>
             <h1 className='text-4xl p-4f center text-center'>Create Objective</h1>
+
             {/* <ModelCreationForm
                 modelFields={
                     [
@@ -56,12 +63,12 @@ function CreateObjective() {
                         { name: 'description', label: 'Description', type: 'textarea', placeholder: 'Objective Description', value: objective.description },
                         { name: 'creation_date', label: 'Creation Date', type: 'date', placeholder: '', value: objective.creation_date },
                         { name: 'deadobjective.creation_date },line', label: 'Deadline', type: 'date', placeholder: '', value: objective.deadline },
-                    ]
-                }
-                setModel={setObjective}
-            />
-            Idea no usada 
-            */}
+                        ]
+                        }
+                        setModel={setObjective}
+                        />
+                        Idea no usada 
+                        */}
 
             <div className='flex flex-col items-center justify-center'>
                 <form className='flex flex-col grid-cols-2 space-y-4 text-orange-800' onSubmit={handleSubmit}>
@@ -93,7 +100,7 @@ function CreateObjective() {
                     <button type='submit' className='bg-white'>Create</button>
                 </form>
             </div>
-        </div>
+        </div >
     )
 }
 
